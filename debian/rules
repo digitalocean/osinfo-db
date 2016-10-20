@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	mkdir build
+	cd build && ln -s ../Makefile .
+	make -C build VPATH=.. ARCHIVE=osinfo-db.tar.xz
+	
+override_dh_auto_clean:
+	rm -rf build
+	dh_auto_clean
+
+override_dh_auto_install:
+	osinfo-db-import \
+	    --root debian/tmp/ \
+	    --dir /usr/share/osinfo \
+	    build/osinfo-db.tar.xz
