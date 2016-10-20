@@ -1,0 +1,35 @@
+osinfo-db
+=========
+
+osinfo-db provides the database files for use with the libosinfo
+library. It provides information about guest operating systems for
+use with virtualization provisioning tools
+
+osinfo-db is Free Software and licenced under GPLv2+.
+
+The latest official releases can be found at:
+
+    https://fedorahosted.org/releases/l/i/libosinfo/
+
+Dependencies
+============
+
+- Required:
+  - osinfo-db-tools
+  - intltool
+
+Patch submissions
+=================
+
+Patch submissions are welcomed from any interested contributor. Please
+use the libosinfo list for any patch submissions, or discussions about
+the code:
+
+    https://www.redhat.com/mailman/listinfo/libosinfo
+
+For further information about libosinfo please consult the project
+homepage
+
+   https://libosinfo.org/
+
+--End

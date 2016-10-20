@@ -1,0 +1,62 @@
+%{?mingw_package_header}
+
+Name: mingw-osinfo-db
+Version: @VERSION@
+Release: 1%{?dist}%{?extra_release}
+Summary: Database for libosinfo API
+License: GPLv2+
+Group: Development/Libraries
+Source: https://fedorahosted.org/releases/l/i/libosinfo/osinfo-db-%{version}.tar.xz
+URL: https://fedorahosted.org/libosinfo/
+
+BuildArch: noarch
+
+BuildRequires: osinfo-db-tools
+
+BuildRequires: mingw32-filesystem >= 95
+BuildRequires: mingw64-filesystem >= 95
+
+%description
+This package provides the osinfo database of information about
+operating systems for use with virtualization provisioning tools
+
+%package -n mingw32-osinfo-db
+Summary: %{summary}
+
+%description -n mingw32-osinfo-db
+This package provides the osinfo database of information about
+operating systems for use with virtualization provisioning tools
+
+%package -n mingw64-osinfo-db
+Summary: %{summary}
+
+%description -n mingw64-osinfo-db
+This package provides the osinfo database of information about
+operating systems for use with virtualization provisioning tools
+
+%install
+osinfo-db-import --root %{buildroot} --dir %{mingw32_datadir}/osinfo %{SOURCE0}
+osinfo-db-import --root %{buildroot} --dir %{mingw64_datadir}/osinfo %{SOURCE0}
+
+
+%files -n mingw32-osinfo-db
+%dir %{mingw32_datadir}/osinfo
+%{mingw32_datadir}/osinfo/VERSION
+%{mingw32_datadir}/osinfo/datamap
+%{mingw32_datadir}/osinfo/device
+%{mingw32_datadir}/osinfo/os
+%{mingw32_datadir}/osinfo/platform
+%{mingw32_datadir}/osinfo/install-script
+%{mingw32_datadir}/osinfo/schema
+
+%files -n mingw64-osinfo-db
+%dir %{mingw64_datadir}/osinfo
+%{mingw64_datadir}/osinfo/VERSION
+%{mingw64_datadir}/osinfo/datamap
+%{mingw64_datadir}/osinfo/device
+%{mingw64_datadir}/osinfo/os
+%{mingw64_datadir}/osinfo/platform
+%{mingw64_datadir}/osinfo/install-script
+%{mingw64_datadir}/osinfo/schema
+
+%changelog
