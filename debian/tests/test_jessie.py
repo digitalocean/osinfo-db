@@ -15,7 +15,7 @@ class TestJessie(unittest.TestCase):
 
     def testVirtio(self):
         """
-        Make sure jessie has vitio block and net
+        Make sure jessie has virtio devices
         """
         osid = "http://debian.org/debian/8"
         os = self.db.get_os(osid)
@@ -27,4 +27,8 @@ class TestJessie(unittest.TestCase):
 
         self.assertIn("virtio-net", devnames)
         self.assertIn("virtio-block", devnames)
+        self.assertIn("virtio-rng", devnames)
+        self.assertIn("virtio-scsi", devnames)
+        self.assertIn("virtio-balloon", devnames)
+        self.assertIn("virtio-9p", devnames)
 
