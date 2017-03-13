@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://redhat.com/rhel/7.2">
     <short-id>rhel7.2</short-id>
@@ -17,7 +17,7 @@
     <media arch="x86_64">
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>.*RHEL-7.2.*x86_64$</volume-id>
+        <volume-id>.*RHEL-7.2.*x86_64.*</volume-id>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>

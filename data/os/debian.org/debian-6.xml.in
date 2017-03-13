@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://debian.org/debian/6">
     <short-id>debian6</short-id>
@@ -11,6 +11,9 @@
     <distro>debian</distro>
     <upgrades id="http://debian.org/debian/5"/>
     <derives-from id="http://debian.org/debian/5"/>
+
+    <release-date>2011-02-06</release-date>
+    <eol-date>2016-02-29</eol-date>
 
     <devices>
       <device id="http://usb.org/usb/80ee/0021"/>

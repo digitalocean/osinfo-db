@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://suse.com/sled/11.3">
     <short-id>sled11sp3</short-id>
@@ -9,6 +9,21 @@
     <family>linux</family>
     <distro>sled</distro>
     <upgrades id="http://suse.com/sled/11.2"/>
+    <derives-from id="http://suse.com/sled/11.2"/>
+
+    <release-date>2013-07-01</release-date>
+    <eol-date>2016-01-31</eol-date>
+
+    <devices>
+      <device id="http://pcisig.com/pci/1b36/0100"/>
+      <device id="http://pcisig.com/pci/1af4/1000"/>
+      <device id="http://pcisig.com/pci/1af4/1001"/>
+      <device id="http://pcisig.com/pci/1af4/1002"/>
+      <device id="http://pcisig.com/pci/1af4/1003"/>
+      <device id="http://pcisig.com/pci/1af4/1004"/>
+      <device id="http://pcisig.com/pci/1af4/1005"/>
+      <device id="http://pcisig.com/pci/1af4/1009"/>
+    </devices>
 
     <media arch="i686">
       <iso>
@@ -26,5 +41,18 @@
       <kernel>boot/x86_64/loader/linux</kernel>
       <initrd>boot/x86_64/loader/initrd</initrd>
     </media>
+
+    <resources arch="all">
+      <minimum>
+        <cpu>500000000</cpu>
+        <ram>536870912</ram>
+        <storage>1074151424</storage>
+      </minimum>
+      <recommended>
+        <cpu>2400000000</cpu>
+        <ram>1073741824</ram>
+        <storage>12884901888</storage>
+      </recommended>
+    </resources>
   </os>
 </libosinfo>

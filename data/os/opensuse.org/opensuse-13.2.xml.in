@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://opensuse.org/opensuse/13.2">
     <short-id>opensuse13.2</short-id>
@@ -12,6 +12,7 @@
     <derives-from id="http://opensuse.org/opensuse/13.1" />
 
     <release-date>2014-11-04</release-date>
+    <eol-date>2017-01-16</eol-date>
 
     <media arch="i686">
       <url>http://download.opensuse.org/distribution/13.2/iso/openSUSE-13.2-DVD-i586.iso</url>
@@ -33,5 +34,19 @@
       <kernel>boot/x86_64/loader/linux</kernel>
       <initrd>boot/x86_64/loader/initrd</initrd>
     </media>
+
+    <resources arch="all">
+      <minimum>
+        <cpu>500000000</cpu>
+        <n-cpus>1</n-cpus>
+        <ram>1073741824</ram>
+        <storage>3221225472</storage>
+      </minimum>
+      <recommended>
+        <cpu>2400000000</cpu>
+        <ram>2147483648</ram>
+        <storage>10737418240</storage>
+      </recommended>
+    </resources>
   </os>
 </libosinfo>
