@@ -6,8 +6,8 @@ Release: 1%{?dist}%{?extra_release}
 Summary: Database for libosinfo API
 License: GPLv2+
 Group: Development/Libraries
-Source: https://fedorahosted.org/releases/l/i/libosinfo/osinfo-db-%{version}.tar.xz
-URL: https://fedorahosted.org/libosinfo/
+Source: https://releases.pagure.io/libosinfo/osinfo-db-%{version}.tar.xz
+URL: https://libosinfo.org/
 
 BuildArch: noarch
 
@@ -41,6 +41,7 @@ osinfo-db-import --root %{buildroot} --dir %{mingw64_datadir}/osinfo %{SOURCE0}
 
 %files -n mingw32-osinfo-db
 %dir %{mingw32_datadir}/osinfo
+%doc %{mingw32_datadir}/osinfo/LICENSE
 %{mingw32_datadir}/osinfo/VERSION
 %{mingw32_datadir}/osinfo/datamap
 %{mingw32_datadir}/osinfo/device
@@ -51,6 +52,7 @@ osinfo-db-import --root %{buildroot} --dir %{mingw64_datadir}/osinfo %{SOURCE0}
 
 %files -n mingw64-osinfo-db
 %dir %{mingw64_datadir}/osinfo
+%doc %{mingw64_datadir}/osinfo/LICENSE
 %{mingw64_datadir}/osinfo/VERSION
 %{mingw64_datadir}/osinfo/datamap
 %{mingw64_datadir}/osinfo/device

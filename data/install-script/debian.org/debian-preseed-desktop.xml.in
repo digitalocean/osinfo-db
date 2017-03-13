@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <install-script id='http://debian.org/debian/preseed/desktop'>
     <profile>desktop</profile>
@@ -173,7 +173,12 @@ d-i apt-setup/security_host string
 tasksel tasksel/first multiselect desktop ssh-server
 
 ### Install Qemu guest agent
-d-i pkgsel/include string qemu-guest-agent
+<xsl:if test="os/version &gt; 7">
+  <xsl:text>d-i pkgsel/include string qemu-guest-agent xserver-xorg-video-qxl spice-vdagent </xsl:text>
+  <xsl:if test="os/version &gt; 8">
+    <xsl:text>spice-webdavd</xsl:text>
+  </xsl:if>
+</xsl:if>
 
 ### Bootloader
 

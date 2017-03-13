@@ -63,14 +63,16 @@ mingwrpm:  mingw-osinfo-db.spec $(ARCHIVE)
 
 %.xml: %.xml.in Makefile
 	@mkdir -p `dirname $@` po
-	$(V_I18N) LC_ALL=C $(INTLTOOL_MERGE) $(INTLTOOL_MERGE_OPTS) -x -u -c po/.intltool-merge-cache $(VPATH)/po $< $@
+	$(V_I18N) LC_ALL=C $(INTLTOOL_MERGE) $(INTLTOOL_MERGE_OPTS) -x -u -c po/.intltool-merge-cache $(VPATH)/po $< $@.tmp \
+	    || { rm $@.tmp && exit 1; }
+	@mv $@.tmp $@
 
 %.rng: %.rng.in Makefile
 	@mkdir -p `dirname $@` po
 	$(V_GEN) $(SED) -e "s/@VERSION@/$(TODAY)/" < $< > $@
 
 $(ARCHIVE): $(DATA_FILES) $(SCHEMA_FILES)
-	$(V_EXP) $(OSINFO_DB_EXPORT) --version "$(TODAY)" --dir data $(ARCHIVE)
+	$(V_EXP) $(OSINFO_DB_EXPORT) --license $(VPATH)/COPYING --version "$(TODAY)" --dir data $(ARCHIVE)
 
 clean:
 	rm -f osinfo-db-*.tar.xz

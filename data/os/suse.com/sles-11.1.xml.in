@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://suse.com/sles/11.1">
     <short-id>sles11sp1</short-id>
@@ -9,8 +9,10 @@
     <family>linux</family>
     <distro>sles</distro>
     <upgrades id="http://suse.com/sles/11"/>
+    <derives-from id="http://suse.com/sles/11"/>
 
     <release-date>2010-06-02</release-date>
+    <eol-date>2012-08-31</eol-date>
 
     <media arch="i686">
       <iso>
@@ -28,5 +30,18 @@
       <kernel>boot/x86_64/loader/linux</kernel>
       <initrd>boot/x86_64/loader/initrd</initrd>
     </media>
+
+    <resources arch="all">
+      <minimum>
+        <cpu>500000000</cpu>
+        <ram>536870912</ram>
+        <storage>1074151424</storage>
+      </minimum>
+      <recommended>
+        <cpu>2400000000</cpu>
+        <ram>1073741824</ram>
+        <storage>12884901888</storage>
+      </recommended>
+    </resources>
   </os>
 </libosinfo>

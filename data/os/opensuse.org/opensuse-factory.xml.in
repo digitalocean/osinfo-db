@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://opensuse.org/opensuse/factory">
     <short-id>opensuse-factory</short-id>
@@ -8,8 +8,8 @@
     <_vendor>openSUSE</_vendor>
     <family>linux</family>
     <distro>opensuse</distro>
-    <upgrades id="http://opensuse.org/opensuse/13.2" />
-    <derives-from id="http://opensuse.org/opensuse/13.2" />
+    <upgrades id="http://opensuse.org/opensuse/tumbleweed"/>
+    <derives-from id="http://opensuse.org/opensuse/tumbleweed"/>
     <release-status>snapshot</release-status>
 
     <media arch="i686">
@@ -35,14 +35,15 @@
     <!-- http://en.opensuse.org/Hardware_requirements -->
       <minimum>
         <cpu>500000000</cpu>
+        <cpu>1600000000</cpu>
         <n-cpus>1</n-cpus>
         <ram>1073741824</ram>
-        <storage>3221225472</storage>
+        <storage>4294967296</storage>
       </minimum>
       <recommended>
         <cpu>2400000000</cpu>
         <ram>2147483648</ram>
-        <storage>5368709120</storage>
+        <storage>21474836480</storage>
       </recommended>
     </resources>
   </os>

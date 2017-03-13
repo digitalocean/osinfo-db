@@ -1,5 +1,5 @@
 <libosinfo version="0.0.1">
-<!-- Licensed under the GNU General Public License version 2.1 or later.
+<!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
   <os id="http://opensuse.org/opensuse/12.2">
     <short-id>opensuse12.2</short-id>
@@ -10,6 +10,9 @@
     <distro>opensuse</distro>
     <upgrades id="http://opensuse.org/opensuse/12.1" />
     <derives-from id="http://opensuse.org/opensuse/12.1" />
+
+    <release-date>2012-09-05</release-date>
+    <eol-date>2014-01-15</eol-date>
 
     <media arch="i686">
       <url>http://download.opensuse.org/distribution/12.2/iso/openSUSE-12.2-DVD-i586.iso</url>
@@ -64,6 +67,7 @@
         <cpu>2400000000</cpu>
         <ram>2147483648</ram>
         <storage>5368709120</storage>
+        <storage>10737418240</storage>
       </recommended>
     </resources>
   </os>
