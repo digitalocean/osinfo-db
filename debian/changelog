@@ -1,14 +1,13 @@
-osinfo-db (0.20170225-1~1.gbp1193b3) UNRELEASED; urgency=medium
+osinfo-db (0.20170225-1) unstable; urgency=medium
 
-  ** SNAPSHOT build @1193b35baebc01243c04c8d267dcba8a750e8ca5 **
-
-  * [b8fecd0] Add autopkgtest
-  * [5736fd3] Add more complete device information for Jessie and Wheezy
-    and remove redundant entries
-    Debian: Remove duplicate devices
   * [b3f7c2d] New upstream version 0.20170225
+    with support for recent linux distributions and windows
+    (Closes: #856666)
+  * [b8fecd0] Add autopkgtest
+  * [0520bd5] Debian Jessie: Update DVD links
+  * [efcfeb9] Add Debian Stretch RCs (Closes: #856667)
 
- -- Guido Günther <agx@sigxcpu.org>  Mon, 13 Mar 2017 20:25:21 +0100
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 14 Mar 2017 19:51:53 +0100
 
 osinfo-db (0.20160728+git20161020-1) unstable; urgency=medium
 
