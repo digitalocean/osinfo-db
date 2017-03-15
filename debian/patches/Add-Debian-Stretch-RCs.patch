@@ -10,7 +10,7 @@ Closes: #856667
 
 diff --git a/data/os/debian.org/debian-9.xml.in b/data/os/debian.org/debian-9.xml.in
 new file mode 100644
-index 0000000..ed371b2
+index 0000000..69e67f9
 --- /dev/null
 +++ b/data/os/debian.org/debian-9.xml.in
 @@ -0,0 +1,64 @@
@@ -56,7 +56,7 @@ index 0000000..ed371b2
 +    </resources>
 +
 +    <media arch="i686">
-+      <url>http://cdimage.debian.org/cdimage/stretch_di_rc2/i386/iso-dvd/debian-stretch-DI-rc2-amd64-DVD-1.iso</url>
++      <url>http://cdimage.debian.org/cdimage/stretch_di_rc2/i386/iso-dvd/debian-stretch-DI-rc2-i386-DVD-1.iso</url>
 +      <iso>
 +        <volume-id>Debian stretch-DI-rc\d i386 1</volume-id>
 +      </iso>
