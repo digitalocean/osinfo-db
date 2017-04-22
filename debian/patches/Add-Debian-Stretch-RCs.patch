@@ -4,13 +4,14 @@ Subject: Add Debian Stretch RCs
 
 Closes: #856667
 ---
- data/os/debian.org/debian-9.xml.in | 64 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ data/os/debian.org/debian-9.xml.in          | 64 +++++++++++++++++++++++++++++
+ debian/patches/Add-Debian-Stretch-RCs.patch |  4 +-
+ 2 files changed, 66 insertions(+), 2 deletions(-)
  create mode 100644 data/os/debian.org/debian-9.xml.in
 
 diff --git a/data/os/debian.org/debian-9.xml.in b/data/os/debian.org/debian-9.xml.in
 new file mode 100644
-index 0000000..69e67f9
+index 0000000..4200f45
 --- /dev/null
 +++ b/data/os/debian.org/debian-9.xml.in
 @@ -0,0 +1,64 @@
@@ -56,7 +57,7 @@ index 0000000..69e67f9
 +    </resources>
 +
 +    <media arch="i686">
-+      <url>http://cdimage.debian.org/cdimage/stretch_di_rc2/i386/iso-dvd/debian-stretch-DI-rc2-i386-DVD-1.iso</url>
++      <url>http://cdimage.debian.org/cdimage/stretch_di_rc3/i386/iso-dvd/debian-stretch-DI-rc3-i386-DVD-1.iso</url>
 +      <iso>
 +        <volume-id>Debian stretch-DI-rc\d i386 1</volume-id>
 +      </iso>
@@ -64,7 +65,7 @@ index 0000000..69e67f9
 +      <initrd>install.386/initrd.gz</initrd>
 +    </media>
 +    <media arch="x86_64">
-+      <url>http://cdimage.debian.org/cdimage/stretch_di_rc2/amd64/iso-dvd/debian-stretch-DI-rc2-amd64-DVD-1.iso</url>
++      <url>http://cdimage.debian.org/cdimage/stretch_di_rc3/amd64/iso-dvd/debian-stretch-DI-rc3-amd64-DVD-1.iso</url>
 +      <iso>
 +	<volume-id>Debian stretch-DI-rc\d amd64 1</volume-id>
 +      </iso>
