@@ -1,3 +1,13 @@
+osinfo-db (0.20170225-2) unstable; urgency=medium
+
+  * [7016785] Fix Stretch URL for i386.
+    Thanks to Laurent Bigonville
+  * [6c535bc] Make build reproducible.
+    Thanks to Chris Lamb (Closes: #860848)
+  * [f34951d] Switch to Stretch Installer RC3
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 22 Apr 2017 11:42:55 +0200
+
 osinfo-db (0.20170225-1) unstable; urgency=medium
 
   * [b3f7c2d] New upstream version 0.20170225
