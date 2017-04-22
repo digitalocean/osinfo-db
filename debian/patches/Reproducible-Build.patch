@@ -1,0 +1,26 @@
+From: Chris Lamb <lamby@debian.org>
+Date: Sat, 22 Apr 2017 11:34:31 +0200
+Subject: Use SOURCE_DATE_EPOCH to make build reproducible
+
+using a fixed timestamp when the variable is set
+---
+ Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 6ff9b5c..d6864af 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,11 @@
+ 
+ VPATH = .
+ 
+-TODAY = $(shell date +"%Y%m%d")
++ifdef SOURCE_DATE_EPOCH
++    TODAY = $(shell date --utc --date="@$(SOURCE_DATE_EPOCH)" +"%Y%m%d")
++else
++    TODAY = $(shell date +"%Y%m%d")
++endif
+ 
+ OSINFO_DB_EXPORT = osinfo-db-export
+ OSINFO_DB_IMPORT = osinfo-db-import
