@@ -31,7 +31,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         version="1.0">
 
-        <xsl:output method="xml" indent="yes"/>
+        <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
 
         <xsl:template name="l10n-language">
           <xsl:choose>
@@ -119,7 +119,7 @@
               </device_map>
               <global>
                 <activate>true</activate>
-                <append> resume=/dev/vda1 splash=silent quiet showopts</append>
+                <append>resume=/dev/vda1 splash=silent quiet showopts</append>
                 <boot_boot>false</boot_boot>
                 <boot_extended>false</boot_extended>
                 <boot_mbr>false</boot_mbr>
@@ -215,18 +215,16 @@
                 <script>
                   <chrooted config:type="boolean">true</chrooted>
                   <source>
+
+if test -z '<xsl:value-of select="config/user-password"/>'; then
 pam-config -a --unix-nullok
 pam-config -a --nullok
 
-<xsl:choose>
-  <xsl:when test="config/user-password != ''">
-useradd <xsl:value-of select='config/user-login'/>
-passwd -d <xsl:value-of select='config/user-login'/>
-  </xsl:when>
-</xsl:choose>
+#Enable passwordless login for users that are part of the nopasswdlogin group
+sed -i '3 i auth sufficient pam_succeed_if.so user ingroup nopasswdlogin' /etc/pam.d/gdm-password
+fi
 
-<xsl:choose>
-  <xsl:when test="config/avatar-location != ''">
+if test -n '<xsl:value-of select="config/avatar-location"/>'; then
 # Set user avatar
 mkdir /mnt/unattended-media
 mount <xsl:value-of select='config/avatar-disk'/> /mnt/unattended-media
@@ -239,8 +237,7 @@ Language=<xsl:value-of select="config/l10n-language"/>.UTF-8
 XSession=gnome
 Icon=/var/lib/AccountsService/icons/<xsl:value-of select="config/user-login"/>
 " >> /var/lib/AccountsService/users/<xsl:value-of select="config/user-login"/>
-  </xsl:when>
-</xsl:choose>
+fi
 
 # Enable default OpenSUSE repos
 zypper ar -f <xsl:call-template name="repo-oss"/> repo-oss
@@ -255,11 +252,6 @@ zypper ar -f <xsl:call-template name="repo-update-oss"/> repo-update-oss
             </scripts>
             <services-manager>
               <default_target>graphical</default_target>
-              <services>
-                <enable config:type="list">
-                  <service>NetworkManager</service>
-                </enable>
-              </services>
             </services-manager>
             <software>
               <packages config:type="list">
@@ -309,6 +301,15 @@ zypper ar -f <xsl:call-template name="repo-update-oss"/> repo-update-oss
               <skel>/etc/skel</skel>
               <umask>022</umask>
             </user_defaults>
+            <xsl:if test="config/user-password = ''">
+              <groups config:type="list">
+                <group>
+                  <group_password>x</group_password>
+                  <groupname>nopasswdlogin</groupname>
+                  <userlist><xsl:value-of select="config/user-login"/></userlist>
+                </group>
+              </groups>
+            </xsl:if>
             <users config:type="list">
               <user>
                 <encrypted config:type="boolean">false</encrypted>

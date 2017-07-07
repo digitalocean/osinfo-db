@@ -1,23 +1,24 @@
 <libosinfo version="0.0.1">
 <!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
-  <os id="http://centos.org/centos/6.4">
-    <short-id>centos6.4</short-id>
-    <_name>CentOS 6.4</_name>
-    <version>6.4</version>
-    <_vendor>CentOS</_vendor>
+  <os id="http://redhat.com/rhel/6.9">
+    <short-id>rhel6.9</short-id>
+    <_name>Red Hat Enterprise Linux 6.9</_name>
+    <version>6.9</version>
+    <_vendor>Red Hat, Inc</_vendor>
     <family>linux</family>
-    <distro>centos</distro>
-    <upgrades id="http://centos.org/centos/6.3"/>
-    <clones id="http://redhat.com/rhel/6.4"/>
+    <distro>rhel</distro>
+    <codename>Santiago</codename>
+    <upgrades id="http://redhat.com/rhel/6.8"/>
+    <derives-from id="http://redhat.com/rhel/6.8"/>
 
-    <release-date>2013-03-09</release-date>
-    <eol-date>2020-11-30</eol-date>
+    <release-date>2017-03-21</release-date>
+    <eol-date>2023-11-30</eol-date>
 
     <media arch="i686">
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS_6.4_Final</volume-id>
+        <volume-id>RHEL-6.9 .*.i386.*</volume-id>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -25,7 +26,7 @@
     <media arch="x86_64">
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS_6.4_Final</volume-id>
+        <volume-id>.*RHEL-6.9 .*.x86_64.*</volume-id>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>

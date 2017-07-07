@@ -22,7 +22,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         version="1.0">
 
-        <xsl:output method="xml" indent="yes"/>
+        <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
 
         <xsl:template name="l10n-language">
           <xsl:choose>
@@ -99,11 +99,6 @@
             <xsl:value-of select="script/expected-filename"/>
         </xsl:template>
 
-        <xsl:template match="/command-line">
-            <xsl:text>autoyast=device://sda/</xsl:text>
-            <xsl:value-of select="script/expected-filename"/>
-        </xsl:template>
-
         <xsl:template match="/install-script-config">
           <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
             <bootloader>
@@ -115,7 +110,7 @@
               </device_map>
               <global>
                 <activate>true</activate>
-                <append> resume=/dev/vda1 splash=silent quiet showopts</append>
+                <append>resume=/dev/vda1 splash=silent quiet showopts</append>
                 <boot_boot>false</boot_boot>
                 <boot_extended>false</boot_extended>
                 <boot_mbr>false</boot_mbr>
@@ -223,12 +218,6 @@ zypper ar -f <xsl:call-template name="repo-update-oss"/> repo-update-oss
             </scripts>
             <services-manager>
               <default_target>multi-user</default_target>
-              <services>
-                <disable config:type="list">
-                  <service>sshd</service>
-                </disable>
-                <enable config:type="list"/>
-              </services>
             </services-manager>
             <software>
               <packages config:type="list">

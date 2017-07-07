@@ -1,36 +1,36 @@
 <libosinfo version="0.0.1">
 <!-- Licensed under the GNU General Public License version 2 or later.
      See http://www.gnu.org/licenses/ for a copy of the license text -->
-  <os id="http://centos.org/centos/6.7">
-    <short-id>centos6.7</short-id>
-    <_name>CentOS 6.7</_name>
-    <version>6.7</version>
+  <os id="http://centos.org/centos/6.8">
+    <short-id>centos6.8</short-id>
+    <_name>CentOS 6.8</_name>
+    <version>6.8</version>
     <_vendor>CentOS</_vendor>
     <family>linux</family>
     <distro>centos</distro>
-    <upgrades id="http://centos.org/centos/6.6"/>
-    <clones id="http://redhat.com/rhel/6.7"/>
+    <upgrades id="http://centos.org/centos/6.7"/>
+    <clones id="http://redhat.com/rhel/6.8"/>
 
-    <release-date>2015-08-07</release-date>
+    <release-date>2016-05-25</release-date>
     <eol-date>2020-11-30</eol-date>
 
     <!-- DVD -->
     <media arch="i686">
-      <url>http://vault.centos.org/6.7/isos/i386/CentOS-6.7-i386-bin-DVD1.iso</url>
+      <url>http://vault.centos.org/6.8/isos/i386/CentOS-6.8-i386-bin-DVD1.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>3786407936</volume-size>
+        <volume-id>CentOS_6.8_Final</volume-id>
+        <volume-size>3844679680</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
     <media arch="x86_64">
-      <url>http://vault.centos.org/6.7/isos/x86_64/CentOS-6.7-x86_64-bin-DVD1.iso</url>
+      <url>http://vault.centos.org/6.8/isos/x86_64/CentOS-6.8-x86_64-bin-DVD1.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>3895459840</volume-size>
+        <volume-id>CentOS_6.8_Final</volume-id>
+        <volume-size>3916271616</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -38,19 +38,19 @@
 
     <!-- Live CD -->
     <media arch="i686" live="true">
-      <url>http://vault.centos.org/6.7/isos/i386/CentOS-6.7-i386-LiveCD.iso</url>
+      <url>http://vault.centos.org/6.8/isos/i386/CentOS-6.8-i386-LiveCD.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS-6.7-i386-LiveCD</volume-id>
+        <volume-id>CentOS-6.8-i386-LiveCD</volume-id>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
     <media arch="x86_64" live="true">
-      <url>http://vault.centos.org/6.7/isos/x86_64/CentOS-6.7-x86_64-LiveCD.iso</url>
+      <url>http://vault.centos.org/6.8/isos/x86_64/CentOS-6.8-x86_64-LiveCD.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS-6.7-x86_64-LiveCD</volume-id>
+        <volume-id>CentOS-6.8-x86_64-LiveCD</volume-id>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -58,19 +58,21 @@
 
     <!-- Live DVD -->
     <media arch="i686" live="true">
-      <url>http://vault.centos.org/6.7/isos/i386/CentOS-6.7-i386-LiveDVD.iso</url>
+      <url>http://vault.centos.org/6.8/isos/i386/CentOS-6.8-i386-LiveDVD.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS-6.7-i386-LiveDVD</volume-id>
+        <volume-id>CentOS-6.8-i386-LiveDVD</volume-id>
+        <volume-size>1990477824</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
     <media arch="x86_64" live="true">
-      <url>http://vault.centos.org/6.7/isos/x86_64/CentOS-6.7-x86_64-LiveDVD.iso</url>
+      <url>http://vault.centos.org/6.8/isos/x86_64/CentOS-6.8-x86_64-LiveDVD.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS-6.7-x86_64-LiveDVD</volume-id>
+        <volume-id>CentOS-6.8-x86_64-LiveDVD</volume-id>
+        <volume-size>2011746304</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -78,21 +80,21 @@
 
     <!-- Minimal Installer -->
     <media arch="i686">
-      <url>http://vault.centos.org/6.7/isos/i386/CentOS-6.7-i386-minimal.iso</url>
+      <url>http://vault.centos.org/6.8/isos/i386/CentOS-6.8-i386-minimal.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>367001600</volume-size>
+        <volume-id>CentOS_6.8_Final</volume-id>
+        <volume-size>370984960</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
     <media arch="x86_64">
-      <url>http://vault.centos.org/6.7/isos/x86_64/CentOS-6.7-x86_64-minimal.iso</url>
+      <url>http://vault.centos.org/6.8/isos/x86_64/CentOS-6.8-x86_64-minimal.iso</url>
       <iso>
         <system-id>LINUX</system-id>
-        <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>414187520</volume-size>
+        <volume-id>CentOS_6.8_Final</volume-id>
+        <volume-size>467867648</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -100,39 +102,39 @@
 
     <!-- Network Installer -->
     <media arch="i686">
-      <url>http://vault.centos.org/6.7/isos/i386/CentOS-6.7-i386-netinstall.iso</url>
+      <url>http://vault.centos.org/6.8/isos/i386/CentOS-6.8-i386-netinstall.iso</url>
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS</volume-id>
-        <volume-size>196083712</volume-size>
+        <volume-size>227659776</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
     <media arch="x86_64">
-      <url>http://vault.centos.org/6.7/isos/x86_64/CentOS-6.7-x86_64-netinstall.iso</url>
+      <url>http://vault.centos.org/6.8/isos/x86_64/CentOS-6.8-x86_64-netinstall.iso</url>
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS</volume-id>
-        <volume-size>241172480</volume-size>
+        <volume-size>238219264</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
 
     <tree arch="i686">
-      <url>http://vault.centos.org/6.7/os/i386</url>
+      <url>http://vault.centos.org/6.8/os/i386</url>
       <treeinfo>
         <family>CentOS</family>
-        <version>6.7</version>
+        <version>6.8</version>
         <arch>i386</arch>
       </treeinfo>
     </tree>
     <tree arch="x86_64">
-      <url>http://vault.centos.org/6.7/os/x86_64</url>
+      <url>http://vault.centos.org/6.8/os/x86_64</url>
       <treeinfo>
         <family>CentOS</family>
-        <version>6.7</version>
+        <version>6.8</version>
         <arch>x86_64</arch>
       </treeinfo>
     </tree>
