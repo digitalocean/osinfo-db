@@ -1,10 +1,10 @@
-osinfo-db (0.20170707-1~1.gbp03fd25) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @03fd2559505e9c5654b3a1e5738d03d40495de05 **
+osinfo-db (0.20170707-1) unstable; urgency=medium
 
   * [1428d41] New upstream version 0.20170707
+  * [1f875ee] Run make check during
+  * [a906220] Drop all patches - all appplied upstream
 
- -- Guido Günther <agx@sigxcpu.org>  Fri, 07 Jul 2017 18:05:10 +0200
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 07 Jul 2017 18:09:19 +0200
 
 osinfo-db (0.20170225-3) unstable; urgency=medium
 
