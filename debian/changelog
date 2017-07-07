@@ -1,3 +1,11 @@
+osinfo-db (0.20170707-1~1.gbp03fd25) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @03fd2559505e9c5654b3a1e5738d03d40495de05 **
+
+  * [1428d41] New upstream version 0.20170707
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 07 Jul 2017 18:05:10 +0200
+
 osinfo-db (0.20170225-3) unstable; urgency=medium
 
   * [c058963] Update Jessie DVD links.

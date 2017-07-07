@@ -1,7 +1,11 @@
 
 VPATH = .
 
-TODAY = $(shell date +"%Y%m%d")
+ifdef SOURCE_DATE_EPOCH
+    TODAY = $(shell date --utc --date="@$(SOURCE_DATE_EPOCH)" +"%Y%m%d")
+else
+    TODAY = $(shell date +"%Y%m%d")
+endif
 
 OSINFO_DB_EXPORT = osinfo-db-export
 OSINFO_DB_IMPORT = osinfo-db-import
@@ -26,6 +30,8 @@ SCHEMA_FILES = data/schema/osinfo.rng
 ARCHIVE = osinfo-db-$(TODAY).tar.xz
 
 ZANATA = zanata-cli
+
+XMLLINT = xmllint
 
 V = 0
 
@@ -79,7 +85,7 @@ clean:
 	rm -f $(DATA_FILES) $(SCHEMA_FILES) po/POTFILES.in po/osinfo-db.pot
 
 po/POTFILES.in:
-	$(V_GEN) find data -name *.xml.in > $@
+	$(V_GEN) find data -name *.xml.in | LC_ALL=C sort > $@
 
 po/osinfo-db.pot: po/POTFILES.in $(DATA_FILES_IN)
 	$(V_GEN) cd po && $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --pot
@@ -113,4 +119,11 @@ update-po:
             rm -f $$lang.new.po; \
           fi; \
         done
+
+check: $(DATA_FILES) $(SCHEMA_FILES)
+	for xml in `find data -name '*.xml' | sort`; do \
+	  if ! $(XMLLINT) --relaxng data/schema/osinfo.rng --noout $$xml; then \
+	    exit 1; \
+	  fi; \
+	done
 
