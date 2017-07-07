@@ -15,6 +15,9 @@ override_dh_auto_clean:
 	rm -rf build
 	dh_auto_clean
 
+override_dh_auto_test:
+	make -C build check
+
 override_dh_auto_install:
 	osinfo-db-import \
 	    --root debian/tmp/ \

@@ -5,6 +5,7 @@ Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends:
  debhelper (>= 10),
  intltool,
+ libxml2-utils,
  osinfo-db-tools,
 Standards-Version: 3.9.8
 Homepage: https://libosinfo.org/
