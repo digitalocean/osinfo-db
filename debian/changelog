@@ -1,3 +1,9 @@
+osinfo-db (0.20170707-2) unstable; urgency=medium
+
+  * [c821b78] debian: switch to archive URLs for stretch
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 23 Jul 2017 14:02:34 +0200
+
 osinfo-db (0.20170707-1) unstable; urgency=medium
 
   * [1428d41] New upstream version 0.20170707
