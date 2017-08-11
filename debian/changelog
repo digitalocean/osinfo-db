@@ -1,3 +1,12 @@
+osinfo-db (0.20170811-1~1.gbp595f73) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @595f73545cb71b17a0288e4efa96bfe7c4034f86 **
+
+  * [596e960] Fix vcs git url
+  * [226d475] New upstream version 0.20170811
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 11 Aug 2017 16:46:30 -0300
+
 osinfo-db (0.20170707-2) unstable; urgency=medium
 
   * [c821b78] debian: switch to archive URLs for stretch
