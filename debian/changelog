@@ -1,11 +1,11 @@
-osinfo-db (0.20170811-1~1.gbp595f73) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @595f73545cb71b17a0288e4efa96bfe7c4034f86 **
+osinfo-db (0.20170811-1) unstable; urgency=medium
 
   * [596e960] Fix vcs git url
   * [226d475] New upstream version 0.20170811
+  * [1cfe3ae] Drop debian-switch-to-archive-URLs-for-stretch.patch applied
+    upstream
 
- -- Guido Günther <agx@sigxcpu.org>  Fri, 11 Aug 2017 16:46:30 -0300
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 11 Aug 2017 16:48:31 -0300
 
 osinfo-db (0.20170707-2) unstable; urgency=medium
 
