@@ -1,4 +1,4 @@
 version=3
 
 opts="pgpsigurlmangle=s/$/.asc/" \
-  https://fedorahosted.org/releases/l/i/libosinfo/osinfo-db(\d.*).tar.gz
+  https://releases.pagure.org/libosinfo/osinfo-db-(\d.*).tar.xz
