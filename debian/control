@@ -14,6 +14,7 @@ Vcs-Browser: https://salsa.debian.org/libvirt-team/osinfo-db
 
 Package: osinfo-db
 Architecture: all
+Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Operating system database files
  libosinfo is a GObject based library API for managing information about
