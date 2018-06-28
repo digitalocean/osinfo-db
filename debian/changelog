@@ -1,16 +1,15 @@
-osinfo-db (0.20180628-1~1.gbp110105) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @11010513715d4520e2ef26e01ddaa720e40a37b8 **
+osinfo-db (0.20180628-1) unstable; urgency=medium
 
   [ Guido Günther ]
   * [25145bf] Point VCS-* URLs to salsa
   * [1bcb0b3] gbp: use commit hashes in changelog
   * [fd17d3c] New upstream version 0.20180628
+    (Closes: #902538)
 
   [ Helmut Grohne ]
   * [34d4878] Mark osinfo-db Multi-Arch: foreign (Closes: #893429)
 
- -- Guido Günther <agx@sigxcpu.org>  Thu, 28 Jun 2018 09:07:03 +0200
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 28 Jun 2018 09:07:49 +0200
 
 osinfo-db (0.20180226-1) unstable; urgency=medium
 
