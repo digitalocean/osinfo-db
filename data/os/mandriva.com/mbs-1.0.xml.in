@@ -9,5 +9,7 @@
     <family>linux</family>
     <distro>mbs</distro>
 
+    <release-date>2013-02-21</release-date>
+    <eol-date>2018-02-20</eol-date>
   </os>
 </libosinfo>

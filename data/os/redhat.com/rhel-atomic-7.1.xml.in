@@ -11,6 +11,8 @@
     <upgrades id="http://redhat.com/rhel-atomic/7.0"/>
     <derives-from id="http://redhat.com/rhel-atomic/7.0"/>
 
+    <release-date>2015-03-05</release-date>
+
     <!-- 7.1-0 -->
     <media arch="x86_64">
       <iso>
@@ -42,9 +44,9 @@
       </minimum>
 
       <recommended>
-        <cpu>400000000</cpu>
+        <cpu>1000000000</cpu>
         <ram>1073741824</ram>
-        <storage>9663676416</storage>
+        <storage>10737418240</storage>
       </recommended>
     </resources>
   </os>
