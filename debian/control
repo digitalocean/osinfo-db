@@ -3,7 +3,7 @@ Section: libs
 Priority: optional
 Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends:
- debhelper (>= 10),
+ debhelper (>= 11),
  intltool,
  libxml2-utils,
  osinfo-db-tools,
