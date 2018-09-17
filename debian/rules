@@ -27,3 +27,4 @@ override_dh_auto_install:
 	    --root debian/tmp/ \
 	    --dir /usr/share/osinfo \
 	    build/osinfo-db.tar.xz
+	rm debian/tmp/usr/share/osinfo/LICENSE
