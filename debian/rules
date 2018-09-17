@@ -16,7 +16,11 @@ override_dh_auto_clean:
 	dh_auto_clean
 
 override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	make -C build check
+else
+	@echo "Checks disabled via DEB_BUILD_OPTIONS"
+endif
 
 override_dh_auto_install:
 	osinfo-db-import \
