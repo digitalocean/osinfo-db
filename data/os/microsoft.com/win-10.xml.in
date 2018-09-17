@@ -22,6 +22,9 @@
     <variant id="enterprise-ltsb">
       <_name>Microsoft Windows 10 Enterprise (Long Term Servicing Branch)</_name>
     </variant>
+    <variant id="enterprise-ltsb-eval">
+      <_name>Microsoft Windows 10 Enterprise (Long Term Servicing Branch) Evaluation</_name>
+    </variant>
 
     <!-- Education -->
     <media arch="i686">
@@ -77,6 +80,24 @@
       </iso>
     </media>
 
+    <!-- Enterprise LTSB (Eval) -->
+    <media arch="i686">
+      <variant id="enterprise-ltsb-eval"/>
+      <iso>
+        <volume-id>CESE_X86FREE_</volume-id>
+        <publisher-id>MICROSOFT CORPORATION</publisher-id>
+        <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/8/l10n-language">[[:upper:][:digit:]_]*_([[:upper:]]*-[[:upper:]]*)</l10n-language>
+      </iso>
+    </media>
+    <media arch="x86_64">
+      <variant id="enterprise-ltsb-eval"/>
+      <iso>
+        <volume-id>CESE_X64FREE_</volume-id>
+        <publisher-id>MICROSOFT CORPORATION</publisher-id>
+        <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/8/l10n-language">[[:upper:][:digit:]_]*_([[:upper:]]*-[[:upper:]]*)</l10n-language>
+      </iso>
+    </media>
+
     <!-- No Variant -->
     <media arch="i686">
       <iso>
@@ -87,7 +108,7 @@
     </media>
     <media arch="x86_64">
       <iso>
-        <volume-id>(J_)?(CCSN?A|CCOMA)_X64FRE_</volume-id>
+        <volume-id>(J_)?(CCSN?A|C?CCOMA)_X64FRE_</volume-id>
         <publisher-id>MICROSOFT CORPORATION</publisher-id>
         <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/8/l10n-language">[[:upper:][:digit:]_]*_([[:upper:]]*-[[:upper:]]*)</l10n-language>
       </iso>
@@ -112,7 +133,7 @@
     </resources>
 
     <devices>
-      <device id="http://pcisig.com/pci/8086/2668"/> <!-- ICH6 -->
+      <device id="http://pcisig.com/pci/8086/2668"/> <!-- ich6 -->
     </devices>
 
     <installer>
