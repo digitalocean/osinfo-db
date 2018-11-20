@@ -13,6 +13,11 @@
 
     <release-date>2012-09-04</release-date>
 
+    <devices>
+      <device id="http://pcisig.com/pci/1033/0194"/> <!-- nec-xhci -->
+      <device id="http://pcisig.com/pci/1b36/0004"/> <!-- qemu-xhci -->
+    </devices>
+
     <variant id="storage">
       <_name>Windows Server 2012 Storage</_name>
     </variant>
@@ -28,7 +33,7 @@
 
     <media arch="x86_64">
       <iso>
-        <volume-id>(HRM_SSS_X64CHK|HRM_SSS_X64FRE)_</volume-id>
+        <volume-id>(HRM_SSS_X64CHK|HRM_SSS_X64FREE?)_</volume-id>
         <publisher-id>MICROSOFT CORPORATION</publisher-id>
         <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/7/l10n-language">[[:upper:][:digit:]]*_([[:upper:]]*)</l10n-language>
       </iso>
@@ -37,7 +42,7 @@
     <media arch="x86_64">
       <variant id="essentials"/>
       <iso>
-        <volume-id>(HRM_SSSO_X64FRE)_</volume-id>
+        <volume-id>(HRM_SSSO_X64FREE?)_</volume-id>
         <publisher-id>MICROSOFT CORPORATION</publisher-id>
         <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/7/l10n-language">[[:upper:][:digit:]]*_([[:upper:]]*)</l10n-language>
       </iso>
@@ -45,7 +50,7 @@
     <media arch="x86_64">
       <variant id="hyperv"/>
       <iso>
-        <volume-id>(HRM_SHV_X64CHK|HRM_SHV_X64FRE)_</volume-id>
+        <volume-id>(HRM_SHV_X64CHK|HRM_SHV_X64FREE?)_</volume-id>
         <publisher-id>MICROSOFT CORPORATION</publisher-id>
         <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/7/l10n-language">[[:upper:][:digit:]]*_([[:upper:]]*)</l10n-language>
       </iso>
@@ -66,5 +71,14 @@
         <l10n-language regex="true" l10n-language-map="http://microsoft.com/win/7/l10n-language">[[:upper:][:digit:]]*_([[:upper:]]*)</l10n-language>
       </iso>
     </media>
+
+    <resources arch="x86_64">
+      <minimum>
+        <cpu>1400000000</cpu>
+        <n-cpus>1</n-cpus>
+        <ram>536870912</ram>
+        <storage>34359738368</storage>
+      </minimum>
+    </resources>
   </os>
 </libosinfo>
