@@ -1,10 +1,9 @@
-osinfo-db (0.20181120-1~1.gbpd4f0ba) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @d4f0badb3a84df2743680549b95348ab49031b4a **
+osinfo-db (0.20181120-1) unstable; urgency=medium
 
   * [aa777b6] New upstream version 0.20181120
+    (Closes: #913908)
 
- -- Guido Günther <agx@sigxcpu.org>  Tue, 20 Nov 2018 22:34:59 +0100
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 20 Nov 2018 22:41:36 +0100
 
 osinfo-db (0.20180929-1) unstable; urgency=medium
 
