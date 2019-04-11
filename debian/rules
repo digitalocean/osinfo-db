@@ -8,8 +8,7 @@
 
 override_dh_auto_build:
 	mkdir build
-	cd build && ln -s ../Makefile .
-	make -C build VPATH=.. ARCHIVE=osinfo-db.tar.xz
+	make -C build -f ../Makefile VPATH=.. ARCHIVE=osinfo-db.tar.xz
 	
 override_dh_auto_clean:
 	rm -rf build
