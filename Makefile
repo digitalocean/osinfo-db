@@ -1,4 +1,3 @@
-
 VPATH = .
 
 ifdef SOURCE_DATE_EPOCH
@@ -21,6 +20,8 @@ GETTEXT_PACKAGE = osinfo-db
 
 SED = sed
 
+TEE = tee
+
 DATA_FILES_IN = $(wildcard $(VPATH)/data/*/*/*.xml.in) $(wildcard $(VPATH)/data/*/*/*/*.xml.in)
 DATA_FILES = $(DATA_FILES_IN:$(VPATH)/%.in=%)
 
@@ -31,7 +32,7 @@ ARCHIVE = osinfo-db-$(TODAY).tar.xz
 
 ZANATA = zanata
 
-XMLLINT = xmllint
+PYTHON = python3
 
 V = 0
 
@@ -50,7 +51,6 @@ V_EXP_1 =
 INTLTOOL_MERGE_OPTS = $(INTLTOOL_MERGE_OPTS_$(V))
 INTLTOOL_MERGE_OPTS_0 = -q
 INTLTOOL_MERGE_OPTS_1 =
-
 
 all: $(ARCHIVE) osinfo-db.spec mingw-osinfo-db.spec
 
@@ -121,9 +121,4 @@ update-po:
         done
 
 check: $(DATA_FILES) $(SCHEMA_FILES)
-	for xml in `find data -name '*.xml' | sort`; do \
-	  if ! $(XMLLINT) --relaxng data/schema/osinfo.rng --noout $$xml; then \
-	    exit 1; \
-	  fi; \
-	done
-
+	$(PYTHON) -m pytest

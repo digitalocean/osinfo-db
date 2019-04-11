@@ -32,7 +32,7 @@
     <!-- Workstation -->
 
     <!-- Live -->
-    <media arch="x86_64" live="true">
+    <media arch="x86_64" live="true" installer-script="false">
       <variant id="workstation"/>
       <url>https://download.fedoraproject.org/pub/fedora/linux/releases/29/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-29-1.2.iso</url>
       <iso>
@@ -53,6 +53,9 @@
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
+      <installer>
+        <script id='http://fedoraproject.org/fedora/kickstart/desktop'/>
+      </installer>
     </media>
 
     <!-- Server -->
@@ -68,6 +71,9 @@
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
+      <installer>
+        <script id='http://fedoraproject.org/fedora/kickstart/jeos'/>
+      </installer>
     </media>
 
     <!-- Network Installer !-->
@@ -81,6 +87,9 @@
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
+      <installer>
+        <script id='http://fedoraproject.org/fedora/kickstart/jeos'/>
+      </installer>
     </media>
 
     <!-- Everything -->
@@ -93,6 +102,10 @@
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
+      <installer>
+        <script id='http://fedoraproject.org/fedora/kickstart/jeos'/>
+        <script id='http://fedoraproject.org/fedora/kickstart/desktop'/>
+      </installer>
     </media>
 
     <tree arch="x86_64">
@@ -102,6 +115,7 @@
         <family>Fedora</family>
         <version>29</version>
         <arch>x86_64</arch>
+        <variant>Workstation</variant>
       </treeinfo>
     </tree>
 
@@ -112,8 +126,17 @@
         <family>Fedora</family>
         <version>29</version>
         <arch>x86_64</arch>
+        <variant>Server</variant>
       </treeinfo>
     </tree>
+
+    <image arch="x86_64" format="qcow2" cloud-init="true">
+      <url>https://dl.fedoraproject.org/pub/fedora/linux/releases/29/Cloud/x86_64/images/Fedora-Cloud-Base-29-1.2.x86_64.qcow2</url>
+    </image>
+
+    <image arch="aarch64" format="qcow2" cloud-init="true">
+      <url>https://dl.fedoraproject.org/pub/fedora/linux/releases/29/Cloud/aarch64/images/Fedora-Cloud-Base-29-1.2.aarch64.qcow2</url>
+    </image>
 
     <!-- No install media or tree is provided for Fedora 29 Cloud variant -->
 

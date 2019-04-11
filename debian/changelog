@@ -1,3 +1,11 @@
+osinfo-db (0.20190411-1~1.gbp5d7a34) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @5d7a342a0c0a11526f5f9d7528aa6c15e7873cf4 **
+
+  * [db0775b] New upstream version 0.20190411
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 11 Apr 2019 12:35:01 +0200
+
 osinfo-db (0.20181120-1) unstable; urgency=medium
 
   * [aa777b6] New upstream version 0.20181120
