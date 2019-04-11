@@ -19,7 +19,7 @@
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>3786407936</volume-size>
+        <volume-size>3786326016</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -28,46 +28,46 @@
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>3895459840</volume-size>
+        <volume-size>3894714368</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
 
     <!-- Live CD -->
-    <media arch="i686" live="true">
+    <media arch="i686" live="true" installer-script="false">
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS-6.7-i386-LiveCD</volume-id>
       </iso>
-      <kernel>isolinux/vmlinuz</kernel>
-      <initrd>isolinux/initrd.img</initrd>
+      <kernel>isolinux/vmlinuz0</kernel>
+      <initrd>isolinux/initrd0.img</initrd>
     </media>
-    <media arch="x86_64" live="true">
+    <media arch="x86_64" live="true" installer-script="false">
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS-6.7-x86_64-LiveCD</volume-id>
       </iso>
-      <kernel>isolinux/vmlinuz</kernel>
-      <initrd>isolinux/initrd.img</initrd>
+      <kernel>isolinux/vmlinuz0</kernel>
+      <initrd>isolinux/initrd0.img</initrd>
     </media>
 
     <!-- Live DVD -->
-    <media arch="i686" live="true">
+    <media arch="i686" live="true" installer-script="false">
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS-6.7-i386-LiveDVD</volume-id>
       </iso>
-      <kernel>isolinux/vmlinuz</kernel>
-      <initrd>isolinux/initrd.img</initrd>
+      <kernel>isolinux/vmlinuz0</kernel>
+      <initrd>isolinux/initrd0.img</initrd>
     </media>
-    <media arch="x86_64" live="true">
+    <media arch="x86_64" live="true" installer-script="false">
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS-6.7-x86_64-LiveDVD</volume-id>
       </iso>
-      <kernel>isolinux/vmlinuz</kernel>
-      <initrd>isolinux/initrd.img</initrd>
+      <kernel>isolinux/vmlinuz0</kernel>
+      <initrd>isolinux/initrd0.img</initrd>
     </media>
 
     <!-- Minimal Installer -->
@@ -75,7 +75,7 @@
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>367001600</volume-size>
+        <volume-size>366696448</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -84,7 +84,7 @@
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS_6.7_Final</volume-id>
-        <volume-size>414187520</volume-size>
+        <volume-size>413882368</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -95,7 +95,7 @@
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS</volume-id>
-        <volume-size>196083712</volume-size>
+        <volume-size>195758080</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
@@ -104,11 +104,28 @@
       <iso>
         <system-id>LINUX</system-id>
         <volume-id>CentOS</volume-id>
-        <volume-size>241172480</volume-size>
+        <volume-size>240156672</volume-size>
       </iso>
       <kernel>isolinux/vmlinuz</kernel>
       <initrd>isolinux/initrd.img</initrd>
     </media>
+
+    <tree arch="x86_64">
+      <url>http://vault.centos.org/6.7/os/x86_64/</url>
+      <treeinfo>
+        <family>CentOS</family>
+        <version>6.7</version>
+        <arch>x86_64</arch>
+      </treeinfo>
+    </tree>
+    <tree arch="i686">
+      <url>http://vault.centos.org/6.7/os/i386/</url>
+      <treeinfo>
+        <family>CentOS</family>
+        <version>6.7</version>
+        <arch>i386</arch>
+      </treeinfo>
+    </tree>
 
     <resources arch="all">
       <minimum>
@@ -124,8 +141,8 @@
     </resources>
 
     <installer>
-      <script id='http://redhat.com/rhel/kickstart/jeos'/>
-      <script id='http://redhat.com/rhel/kickstart/desktop'/>
+      <script id='http://centos.org/centos/kickstart/jeos'/>
+      <script id='http://centos.org/centos/kickstart/desktop'/>
     </installer>
   </os>
 </libosinfo>

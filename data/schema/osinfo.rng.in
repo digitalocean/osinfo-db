@@ -290,7 +290,7 @@
   <define name='resources'>
     <element name='resources'>
       <attribute name='arch'>
-        <ref name='archnamesorwildcard'/>
+        <ref name='archnamesorall'/>
       </attribute>
       <optional>
         <attribute name='inherit'>
@@ -298,6 +298,11 @@
         </attribute>
       </optional>
       <interleave>
+        <optional>
+          <element name='network-install'>
+            <ref name='resource-attr'/>
+          </element>
+        </optional>
         <optional>
           <element name='minimum'>
             <ref name='resource-attr'/>
@@ -368,6 +373,11 @@
         </attribute>
       </optional>
       <optional>
+        <attribute name='installer-script'>
+          <ref name='bool'/>
+        </attribute>
+      </optional>
+      <optional>
         <attribute name='installer-reboots'>
           <ref name='num'/>
         </attribute>
@@ -401,6 +411,11 @@
           <element name='kernel'>
             <text/>
           </element>
+        </optional>
+        <optional>
+          <zeroOrMore>
+            <ref name='installer'/>
+          </zeroOrMore>
         </optional>
       </interleave>
     </element>
@@ -452,7 +467,7 @@
   <define name='tree'>
     <element name='tree'>
       <attribute name='arch'>
-        <ref name='archnames'/>
+        <ref name='archnamesorall'/>
       </attribute>
       <interleave>
         <optional>
@@ -482,6 +497,35 @@
         <optional>
           <element name='boot-iso'>
             <text/>
+          </element>
+        </optional>
+      </interleave>
+    </element>
+  </define>
+
+  <define name='image'>
+    <element name='image'>
+      <attribute name='arch'>
+        <ref name='archnames'/>
+      </attribute>
+      <attribute name='format'>
+        <ref name='imageformats'/>
+      </attribute>
+      <optional>
+        <attribute name='cloud-init'>
+          <ref name='bool'/>
+        </attribute>
+      </optional>
+      <interleave>
+        <optional>
+          <element name='variant'>
+            <attribute name='id'>
+            </attribute>
+          </element>
+        </optional>
+        <optional>
+          <element name='url'>
+            <ref name='url'/>
           </element>
         </optional>
       </interleave>
@@ -557,6 +601,9 @@
         </zeroOrMore>
         <zeroOrMore>
           <ref name='tree'/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name='image'/>
         </zeroOrMore>
         <zeroOrMore>
           <ref name='installer'/>
@@ -727,7 +774,7 @@
     </element>
   </define>
 
-  <define name='archnamesorwildcard'>
+  <define name='archnamesorall'>
     <choice>
       <value>all</value>
       <ref name='archnames'/>
@@ -766,6 +813,15 @@
       <value>x86_64</value>
       <value>xtensa</value>
       <value>xtensaeb</value>
+    </choice>
+  </define>
+
+  <define name='imageformats'>
+    <choice>
+      <value>qcow2</value>
+      <value>raw</value>
+      <value>vhdx</value>
+      <value>vmdk</value>
     </choice>
   </define>
 
@@ -828,7 +884,7 @@
   <define name='release-status'>
     <element name='release-status'>
       <data type="string">
-        <param name="pattern">snapshot|prerelease|released</param>
+        <param name="pattern">snapshot|prerelease|released|rolling</param>
       </data>
     </element>
   </define>

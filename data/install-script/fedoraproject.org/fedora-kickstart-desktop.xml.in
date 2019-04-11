@@ -10,8 +10,8 @@
         <param name="l10n-timezone" policy="optional"/>
         <param name="hostname" policy="optional"/>
         <param name="user-login" policy="required"/>
-        <param name="user-password" policy="required"/>
-        <param name="admin-password" policy="required"/>
+        <param name="user-password" policy="optional"/>
+        <param name="admin-password" policy="optional"/>
         <param name="avatar-location" policy="optional"/>
         <param name="avatar-disk" policy="optional"/>
         <param name="target-disk" policy="optional"/>
@@ -20,6 +20,7 @@
     <injection-method>cdrom</injection-method>
     <injection-method>disk</injection-method>
     <injection-method>floppy</injection-method>
+    <injection-method>initrd</injection-method>
     <avatar-format>
       <mime-type>image/png</mime-type>
     </avatar-format>
@@ -57,53 +58,61 @@
           <xsl:value-of select="substring-after($script-disk, '/dev/')"/>
         </xsl:template>
 
-	<xsl:template name="rootfs">
-	  <xsl:choose>
-	    <xsl:when test="os/version &gt; 10">
-	      <xsl:text>ext4</xsl:text>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>ext3</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:template>
+        <xsl:template name="rootfs">
+          <xsl:choose>
+            <xsl:when test="os/version &gt; 10">
+              <xsl:text>ext4</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>ext3</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
 
-	<xsl:template name="bootfs">
-	  <xsl:choose>
-	    <xsl:when test="os/version &gt; 11">
-	      <xsl:text>ext4</xsl:text>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>ext3</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:template>
+        <xsl:template name="bootfs">
+          <xsl:choose>
+            <xsl:when test="os/version &gt; 11">
+              <xsl:text>ext4</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>ext3</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
 
-	<xsl:template name="keyboard">
-	  <xsl:choose>
-	    <xsl:when test="os/version &gt; 17">
+        <xsl:template name="keyboard">
+          <xsl:choose>
+            <xsl:when test="os/version &gt; 17">
               <xsl:value-of select="config/l10n-keyboard"/>
-	    </xsl:when>
-	    <xsl:otherwise>
+            </xsl:when>
+            <xsl:otherwise>
               <!-- FIXME: F17 and older required keyboard layout to be a console
                    layout so we'll need a different datamap for those but
                    currently we only support one datamap per config param per
                    script. -->
-	      <xsl:text>us</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:template>
+              <xsl:text>us</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
 
         <xsl:template match="/command-line">
-            <xsl:text>ks=hd:</xsl:text>
-            <xsl:call-template name="script-disk"/>
-            <xsl:text>:/</xsl:text>
+            <xsl:text>ks=</xsl:text>
+            <xsl:choose>
+              <xsl:when test="script/preferred-injection-method = 'initrd'">
+                <xsl:text>file:/</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>hd:</xsl:text>
+                <xsl:call-template name="script-disk"/>
+                <xsl:text>:/</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
             <xsl:value-of select="script/expected-filename"/>
         </xsl:template>
 
         <xsl:template match="/install-script-config">
 # Install script for <xsl:value-of select="os/short-id"/> profile <xsl:value-of select="script/profile"/>
-<xsl:if test="count(media/variant) = 0 or not(contains(media/variant, 'netinst'))">
+<xsl:if test="script/installation-source = 'media' and (count(media/variant) = 0 or not(contains(media/variant, 'netinst')))">
 install
 cdrom
 </xsl:if>
@@ -128,15 +137,10 @@ clearpart --all --drives=<xsl:call-template name="target-disk"/>
 
 firstboot --disable
 
-part biosboot --fstype=biosboot --size=1
-part /boot --fstype <xsl:call-template name="bootfs"/> --recommended --ondisk=<xsl:call-template name="target-disk"/>
-part pv.2 --size=1 --grow --ondisk=<xsl:call-template name="target-disk"/>
-volgroup VolGroup00 --pesize=32768 pv.2
-logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=768 --grow --maxsize=1536
-logvol / --fstype <xsl:call-template name="rootfs"/> --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
+autopart
 reboot
 
-<xsl:if test="contains(media/variant, 'netinst')">
+<xsl:if test="script/installation-source = 'network' or contains(media/variant, 'netinst')">
 repo --name=fedora --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch
 repo --name=updates --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&amp;arch=$basearch
 url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch
@@ -224,7 +228,7 @@ AutomaticLogin=<xsl:value-of select="config/user-login"/>
 " > /etc/gdm/custom.conf
 
 %end
-	</xsl:template>
+        </xsl:template>
       </xsl:stylesheet>
     </template>
   </install-script>
