@@ -1,10 +1,15 @@
-osinfo-db (0.20190411-1~1.gbp5d7a34) UNRELEASED; urgency=medium
-
-  ** SNAPSHOT build @5d7a342a0c0a11526f5f9d7528aa6c15e7873cf4 **
+osinfo-db (0.20190411-1) experimental; urgency=medium
 
   * [db0775b] New upstream version 0.20190411
+    (Closes: #919492)
+  * [4d8dc9f] d/gbp.conf: Switch to experimental
+  * [5e316c2] d/control: Update build deps for new tests
+  * [7ff7a4f] d/rules: Simplify build
+  * [9d71757] d/rules: Disable tests.
+    Running them out of tree is currently broken.
+  * [d835b01] Use minimal upstream signing key
 
- -- Guido Günther <agx@sigxcpu.org>  Thu, 11 Apr 2019 12:35:01 +0200
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 11 Apr 2019 13:19:34 +0200
 
 osinfo-db (0.20181120-1) unstable; urgency=medium
 
