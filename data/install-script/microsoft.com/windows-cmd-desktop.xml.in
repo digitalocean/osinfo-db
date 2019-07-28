@@ -18,6 +18,7 @@
       <param name="post-install-drivers-location" policy="optional"/>
       <param name="driver-signing" policy="optional"/>
     </config>
+    <injection-method>cdrom</injection-method>
     <injection-method>floppy</injection-method>
     <avatar-format>
       <mime-type>image/bmp</mime-type>
@@ -47,6 +48,9 @@
             <xsl:when test="config/script-disk != ''">
               <xsl:value-of select="config/script-disk"/>
             </xsl:when>
+            <xsl:when test="script/preferred-injection-method = 'cdrom'">
+              <xsl:text>E</xsl:text>
+            </xsl:when>
             <xsl:otherwise>
               <xsl:text>A</xsl:text>
             </xsl:otherwise>
@@ -57,6 +61,9 @@
           <xsl:choose>
             <xsl:when test="config/post-install-drivers-disk != ''">
               <xsl:value-of select="config/post-install-drivers-disk"/>
+            </xsl:when>
+            <xsl:when test="script/preferred-injection-method = 'cdrom'">
+              <xsl:text>E</xsl:text>
             </xsl:when>
             <xsl:otherwise>
               <xsl:text>A</xsl:text>
@@ -86,8 +93,14 @@ net localgroup administrators <xsl:value-of select="config/user-realname"/> /add
 net accounts /maxpwage:unlimited
 REGEDIT /S <xsl:call-template name="script-disk"/>:\windows.reg
 </xsl:if>
+<!-- Do not try to copy the user avatar for Windows 8+.
+     Windows 8+ needs a more than one image, with different sizes, in order to
+     properly set the user's avatar all over the place.
+     Reference: https://gitlab.com/libosinfo/osinfo-db/issues/24 -->
+<xsl:if test="os/version &lt; 6.2">
 if not "<xsl:value-of select="config/avatar-location"/>"=="" copy "<xsl:value-of select="config/avatar-disk"/>:<xsl:value-of select="config/avatar-location"/>" "<xsl:call-template name="avatar-destination"/>
 <xsl:text>&#xa;</xsl:text>
+</xsl:if>
 
 <xsl:call-template name="post-install-drivers-disk"/>:
 <xsl:if test="config/driver-signing = 'false' and os/version &gt; 5.1">
@@ -95,7 +108,7 @@ bcdedit.exe -set loadoptions DDISABLE_INTEGRITY_CHECKS
 bcdedit.exe -set TESTSIGNING ON
 </xsl:if>
 
-for %%i in ("<xsl:call-template name="post-install-drivers-disk"/>:<xsl:value-of select="config/post-install-drivers-location"/>\*.cmd") do cmd /c %%i
+for %%i in ("<xsl:call-template name="post-install-drivers-disk"/>:<xsl:value-of select="config/post-install-drivers-location"/>\*.cmd") do if not "%%i" == "<xsl:call-template name="post-install-drivers-disk"/>:\<xsl:value-of select="script/expected-filename"/>" cmd /c %%i
 
 EXIT
         </xsl:template>

@@ -25,22 +25,22 @@ def human_sort(text):
             re.split(r'[+-]?([0-9]+(?:[.][0-9]*)?|[.][0-9]+)', text)]
 
 
-class _DataFiles():
+class _Files():
     """
-    Track a list of DATA_DIR XML files and provide APIs for querying
-    them. Meant to be initialized only once
+    Track a list of DATA_DIR files and provide APIs for querying them.
     """
-    def __init__(self):
-        self.datadir = os.environ['INTERNAL_OSINFO_DB_DATA_DIR']
+    def __init__(self, dir_env, files_format):
+        self.datadir = os.environ[dir_env]
         self.schema = os.path.join(self.datadir, 'schema', 'osinfo.rng')
         self._all_xml_cache = []
         self._oses_cache = []
         self._devices_cache = []
         self._os_related_cache = defaultdict(list)
+        self._files_format = files_format
 
         if not os.path.exists(self.datadir):
-            raise RuntimeError("INTERNAL_OSINFO_DB_DATA_DIR=%s "
-                "doesn't exist" % self.datadir)
+            raise RuntimeError("%s=%s doesn't exist" % (dir_env, self.datadir))
+
 
     def _get_all_xml(self):
         """
@@ -49,7 +49,7 @@ class _DataFiles():
         if not self._all_xml_cache:
             for (dirpath, _, filenames) in os.walk(self.datadir):
                 for filename in sorted(filenames, key=human_sort):
-                    if not filename.endswith('.xml'):
+                    if not filename.endswith(self._files_format):
                         continue
                     self._all_xml_cache.append(os.path.join(dirpath, filename))
         return self._all_xml_cache
@@ -62,7 +62,8 @@ class _DataFiles():
                 p.startswith(os.path.join(self.datadir, dirname))]
 
     def oses(self, filter_media=False, filter_trees=False, filter_images=False,
-            filter_devices=False, filter_resources=False):
+            filter_devices=False, filter_resources=False, filter_dates=False,
+            filter_related=False):
         """
         Return a list of osinfo.Os objects
 
@@ -84,6 +85,10 @@ class _DataFiles():
             oses = [o for o in oses if o.devices]
         if filter_resources:
             oses = [o for o in oses if o.resources_list]
+        if filter_dates:
+            oses = [o for o in oses if o.release_date or o.eol_date]
+        if filter_related:
+            oses = [o for o in oses if self.getosxml_related(o)]
         return oses
 
     def getosxml_related(self, osxml):
@@ -122,7 +127,23 @@ class _DataFiles():
         return self._get_all_xml()
 
 
+class _DataFiles(_Files):
+    """
+    Track a list of DATA_DIR XML files and provide APIs for querying
+    them. Meant to be initialized only once
+    """
+    def __init__(self):
+        _Files.__init__(self, 'INTERNAL_OSINFO_DB_DATA_DIR', '.xml')
+
+
 DataFiles = _DataFiles()
+
+
+def _ids_cb(osxml):
+    # pytest passes us a weird value when oses is empty, which
+    # might happen depending on how agressively we filter. So
+    # we can't assume we are passed an Os instance
+    return getattr(osxml, "shortid", str(osxml))
 
 
 def os_parametrize(argname, **kwargs):
@@ -130,11 +151,27 @@ def os_parametrize(argname, **kwargs):
     Helper for parametrizing a test with an OS list. Passthrough any
     extra arguments to DataFiles.oses()
     """
-    def ids_cb(osxml):
-        # pytest passes us a weird value when oses is empty, which
-        # might happen depending on how agressively we filter. So
-        # we can't assume we are passed an Os instance
-        return getattr(osxml, "shortid", str(osxml))
-
     oses = DataFiles.oses(**kwargs)
-    return pytest.mark.parametrize(argname, oses, ids=ids_cb)
+    return pytest.mark.parametrize(argname, oses, ids=_ids_cb)
+
+
+class _SourceFiles(_Files):
+    """
+    Track a list of DATA_SRC_DIR XML.IN files and provide APIs for querying
+    them. Meant to be initialized only once
+    """
+    def __init__(self):
+        _Files.__init__(self, 'INTERNAL_OSINFO_DB_DATA_SRC_DIR', '.xml.in')
+
+
+SourceFiles = _SourceFiles()
+
+
+def os_sources_parametrize(argname, **kwargs):
+    """
+    Helper for parametrizing a test with an OS list. Passthrough any
+    extra arguments to DataFiles.oses()
+    """
+
+    oses = SourceFiles.oses(**kwargs)
+    return pytest.mark.parametrize(argname, oses, ids=_ids_cb)

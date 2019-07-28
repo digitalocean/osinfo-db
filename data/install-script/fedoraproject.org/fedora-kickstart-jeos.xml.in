@@ -10,7 +10,7 @@
       <param name="l10n-language" policy="optional"/>
       <param name="l10n-timezone" policy="optional"/>
       <param name="target-disk" policy="optional"/>
-      <param name="script-disk" policy="required"/>
+      <param name="script-disk" policy="optional"/>
     </config>
     <injection-method>cdrom</injection-method>
     <injection-method>disk</injection-method>
@@ -45,7 +45,20 @@
 
         <xsl:template name="script-disk">
           <xsl:variable name="script-disk">
-            <xsl:value-of select="config/script-disk"/>
+            <xsl:choose>
+              <xsl:when test="config/script-disk != ''">
+                <xsl:value-of select="config/script-disk"/>
+              </xsl:when>
+              <xsl:when test="os/version &gt; 9">
+                <xsl:text>/dev/sda</xsl:text>
+              </xsl:when>
+              <xsl:when test="os/version &gt; 6">
+                <xsl:text>/dev/sdb</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>/dev/hdb</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:variable>
           <xsl:value-of select="substring-after($script-disk, '/dev/')"/>
         </xsl:template>
@@ -88,18 +101,53 @@
         </xsl:template>
 
         <xsl:template match="/command-line">
-            <xsl:text>ks=</xsl:text>
+          <xsl:text>ks=</xsl:text>
+          <xsl:choose>
+            <xsl:when test="script/preferred-injection-method = 'initrd'">
+              <xsl:text>file:/</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>hd:</xsl:text>
+              <xsl:call-template name="script-disk"/>
+              <xsl:text>:/</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:value-of select="script/expected-filename"/>
+          <xsl:if test="script/installation-source = 'network'">
             <xsl:choose>
-              <xsl:when test="script/preferred-injection-method = 'initrd'">
-                <xsl:text>file:/</xsl:text>
+              <xsl:when test="os/version &lt; 19">
+                <xsl:text> method=</xsl:text>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:text>hd:</xsl:text>
-                <xsl:call-template name="script-disk"/>
-                <xsl:text>:/</xsl:text>
+                <xsl:text> inst.repo=</xsl:text>
               </xsl:otherwise>
             </xsl:choose>
-            <xsl:value-of select="script/expected-filename"/>
+            <xsl:call-template name="installation-url"/>
+          </xsl:if>
+        </xsl:template>
+
+        <xsl:template name="installation-url">
+          <xsl:choose>
+            <xsl:when test="config/installation-url != ''">
+              <xsl:value-of select="config/installation-url"/>
+            </xsl:when>
+            <xsl:when test="tree/url != ''">
+              <xsl:value-of select="tree/url"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:template>
+
+        <xsl:template name="url-or-mirrorlist">
+          <xsl:choose>
+            <xsl:when test="config/installation-url != '' or tree/url != ''">
+              <xsl:text> --url=</xsl:text>
+              <xsl:call-template name="installation-url"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text> --mirrorlist=</xsl:text>
+              <xsl:text>https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:template>
 
         <xsl:template match="/install-script-config">
@@ -153,7 +201,7 @@ reboot
 <xsl:if test="script/installation-source='network' or contains(media/variant, 'netinst')">
 repo --name=fedora --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch
 repo --name=updates --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&amp;arch=$basearch
-url --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&amp;arch=$basearch
+url <xsl:call-template name="url-or-mirrorlist"/>
 </xsl:if>
 
 %packages
