@@ -1,3 +1,9 @@
+osinfo-db (0.20190728-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 28 Jul 2019 12:27:27 +0200
+
 osinfo-db (0.20190728-1) experimental; urgency=medium
 
   * [618ff6e] New upstream version 0.20190728
