@@ -9,8 +9,10 @@
     <distro>openbsd</distro>
     <_vendor>OpenBSD Project</_vendor>
     <upgrades id='http://openbsd.org/openbsd/6.2'/>
+    <derives-from id='http://openbsd.org/openbsd/6.2'/>
 
     <release-date>2018-04-02</release-date>
+    <eol-date>2019-05-03</eol-date>
 
     <media arch="i686">
       <url>https://fastly.cdn.openbsd.org/pub/OpenBSD/6.3/i386/install63.iso</url>

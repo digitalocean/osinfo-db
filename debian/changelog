@@ -1,3 +1,11 @@
+osinfo-db (0.20190728-1~1.gbp609f75) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @609f753beb6b61acff0272fa1a8c515e076f26bf **
+
+  * [618ff6e] New upstream version 0.20190728
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 28 Jul 2019 10:03:16 +0200
+
 osinfo-db (0.20190411-1) experimental; urgency=medium
 
   * [db0775b] New upstream version 0.20190411

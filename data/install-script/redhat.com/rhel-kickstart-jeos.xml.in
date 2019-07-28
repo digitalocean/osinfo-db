@@ -10,7 +10,7 @@
       <param name="l10n-language" policy="optional"/>
       <param name="l10n-timezone" policy="optional"/>
       <param name="target-disk" policy="optional"/>
-      <param name="script-disk" policy="required"/>
+      <param name="script-disk" policy="optional"/>
     </config>
     <injection-method>cdrom</injection-method>
     <injection-method>disk</injection-method>
@@ -28,7 +28,7 @@
             <xsl:when test="config/target-disk != ''">
               <xsl:value-of select="config/target-disk"/>
             </xsl:when>
-            <xsl:when test="os/version &gt; 4">
+            <xsl:when test="os/version &gt; 5.5">
               <!-- virtio -->
               <xsl:text>/dev/vda</xsl:text>
             </xsl:when>
@@ -41,20 +41,19 @@
 
         <xsl:template name="script-disk">
           <xsl:variable name="script-disk">
-            <xsl:value-of select="config/script-disk"/>
+            <xsl:choose>
+              <xsl:when test="config/script-disk != ''">
+                <xsl:value-of select="config/script-disk"/>
+              </xsl:when>
+              <xsl:when test="os/version &gt; 5.5">
+                <xsl:text>/dev/sda</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>/dev/sdb</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:variable>
           <xsl:value-of select="substring-after($script-disk, '/dev/')"/>
-        </xsl:template>
-
-        <xsl:template name="installation-url">
-          <xsl:choose>
-            <xsl:when test="config/installation-url != ''">
-              <xsl:value-of select="config/installation-url"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="tree/url"/>
-            </xsl:otherwise>
-          </xsl:choose>
         </xsl:template>
 
         <xsl:template match="/command-line">
@@ -70,6 +69,56 @@
             </xsl:otherwise>
           </xsl:choose>
           <xsl:value-of select="script/expected-filename"/>
+          <xsl:if test="script/installation-source = 'network'">
+            <xsl:choose>
+              <xsl:when test="os/version &lt; 7">
+                <xsl:text> method=</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text> inst.repo=</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+            <xsl:call-template name="installation-url"/>
+          </xsl:if>
+        </xsl:template>
+
+        <xsl:template name="version">
+          <xsl:choose>
+            <xsl:when test="os/version &lt; 7">
+              <xsl:text>6</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>7</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
+        <xsl:template name="arch">
+          <xsl:choose>
+            <xsl:when test="config/hardware-arch = 'x86_64'">
+              <xsl:text>x86_64</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>i386</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
+        <xsl:template name="installation-url">
+          <xsl:choose>
+            <xsl:when test="config/installation-url != ''">
+              <xsl:value-of select="config/installation-url"/>
+            </xsl:when>
+            <xsl:when test="tree/url != ''">
+              <xsl:value-of select="tree/url"/>
+            </xsl:when>
+            <xsl:when test="os/distro = centos">
+              <xsl:text>http://mirror.centos.org/centos/</xsl:text>
+              <xsl:call-template name="version"/>
+              <xsl:text>/os/</xsl:text>
+              <xsl:call-template name="arch"/>
+            </xsl:when>
+          </xsl:choose>
         </xsl:template>
 
         <xsl:template match="/install-script-config">
@@ -87,7 +136,9 @@ skipx
 network --bootproto dhcp
 rootpw <xsl:value-of select="config/admin-password"/>
 firewall --disabled
+<xsl:if test="os/version &lt; 8">
 authconfig --enableshadow --enablemd5
+</xsl:if>
 selinux --enforcing
 timezone --utc <xsl:value-of select="config/l10n-timezone"/>
 bootloader --location=mbr
@@ -108,7 +159,14 @@ url --url=<xsl:call-template name="installation-url"/>
 @base
   </xsl:when>
   <xsl:otherwise>
+    <xsl:choose>
+      <xsl:when test="os/distro = centos">
+@^minimal
+      </xsl:when>
+      <xsl:otherwise>
 @standard
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:otherwise>
 </xsl:choose>
 @core

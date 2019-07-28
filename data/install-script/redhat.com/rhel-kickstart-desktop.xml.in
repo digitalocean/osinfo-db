@@ -15,7 +15,7 @@
         <param name="avatar-location" policy="optional"/>
         <param name="avatar-disk" policy="optional"/>
         <param name="target-disk" policy="optional"/>
-        <param name="script-disk" policy="required"/>
+        <param name="script-disk" policy="optional"/>
     </config>
     <injection-method>cdrom</injection-method>
     <injection-method>disk</injection-method>
@@ -36,7 +36,7 @@
             <xsl:when test="config/target-disk != ''">
               <xsl:value-of select="config/target-disk"/>
             </xsl:when>
-            <xsl:when test="os/version &gt; 4">
+            <xsl:when test="os/version &gt; 5.5">
               <!-- virtio -->
               <xsl:text>/dev/vda</xsl:text>
             </xsl:when>
@@ -49,18 +49,33 @@
 
         <xsl:template name="script-disk">
           <xsl:variable name="script-disk">
-            <xsl:value-of select="config/script-disk"/>
+            <xsl:choose>
+              <xsl:when test="config/script-disk != ''">
+                <xsl:value-of select="config/script-disk"/>
+              </xsl:when>
+              <xsl:when test="os/version &gt; 5.5">
+                <xsl:text>/dev/sda</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>/dev/sdb</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:variable>
           <xsl:value-of select="substring-after($script-disk, '/dev/')"/>
         </xsl:template>
 
-        <xsl:template name="installation-url">
+        <!-- The default values of avatar-disk consider the avatar is stored
+             in the same disk as the installation scripts. -->
+        <xsl:template name="avatar-disk">
           <xsl:choose>
-            <xsl:when test="config/installation-url != ''">
-              <xsl:value-of select="config/installation-url"/>
+            <xsl:when test="config/avatar-disk != ''">
+              <xsl:value-of select="config/avatar-disk"/>
+            </xsl:when>
+            <xsl:when test="os/version &gt; 5.5">
+              <xsl:text>/dev/sda</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="tree/url"/>
+              <xsl:text>/dev/sdb</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:template>
@@ -78,6 +93,65 @@
             </xsl:otherwise>
           </xsl:choose>
           <xsl:value-of select="script/expected-filename"/>
+          <xsl:if test="script/installation-source = 'network'">
+            <xsl:choose>
+              <xsl:when test="os/version &lt; 7">
+                <xsl:text> method=</xsl:text>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text> inst.repo=</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+            <xsl:call-template name="installation-url"/>
+          </xsl:if>
+        </xsl:template>
+
+        <xsl:template name="version">
+          <xsl:choose>
+            <xsl:when test="os/version &lt; 7">
+              <xsl:text>6</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>7</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
+        <xsl:template name="arch">
+          <xsl:choose>
+            <xsl:when test="config/hardware-arch = 'x86_64'">
+              <xsl:text>x86_64</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>i386</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
+        <xsl:template name="installation-url">
+          <xsl:choose>
+            <xsl:when test="config/installation-url != ''">
+              <xsl:value-of select="config/installation-url"/>
+            </xsl:when>
+            <xsl:when test="tree/url != ''">
+              <xsl:value-of select="tree/url"/>
+            </xsl:when>
+            <xsl:when test="os/distro = 'centos'">
+              <xsl:text>http://mirror.centos.org/centos/</xsl:text>
+              <xsl:call-template name="version"/>
+              <xsl:text>/os/</xsl:text>
+              <xsl:call-template name="arch"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:template>
+
+        <xsl:template name="appstream-url">
+          <xsl:variable name="url">
+            <xsl:call-template name="installation-url"/>
+          </xsl:variable>
+          <xsl:value-of select="substring-before($url, 'BaseOS')"/>
+          <xsl:text>AppStream</xsl:text>
+          <xsl:value-of select="substring-after($url, 'BaseOS')"/>
         </xsl:template>
 
         <xsl:template match="/install-script-config">
@@ -91,7 +165,9 @@ lang <xsl:value-of select="config/l10n-language"/>
 network --onboot yes --bootproto dhcp --noipv6 --hostname=<xsl:value-of select="config/hostname"/>
 rootpw dummyPa55w0rd # Actual password set (or unset) in %post below
 firewall --disabled
+<xsl:if test="os/version &lt; 8">
 authconfig --enableshadow --enablemd5
+</xsl:if>
 timezone --utc <xsl:value-of select="config/l10n-timezone"/>
 bootloader --location=mbr
 zerombr
@@ -105,11 +181,13 @@ reboot
 
 <xsl:if test="script/installation-source = 'network'">
 url --url=<xsl:call-template name="installation-url"/>
+  <xsl:if test="os/version &gt; 7 or os/version = '8-unknown'">
+repo --name=AppStream --baseurl=<xsl:call-template name="appstream-url"/>
+  </xsl:if>
 </xsl:if>
 
 %packages
 @core
-@x11
 <xsl:choose>
   <xsl:when test="os/version &lt; 7">
 @basic-desktop
@@ -117,6 +195,9 @@ url --url=<xsl:call-template name="installation-url"/>
 @desktop-platform
   </xsl:when>
   <xsl:otherwise>
+    <xsl:if test="os/version &lt; 8">
+@x11
+    </xsl:if>
 @gnome-desktop
 @multimedia
   </xsl:otherwise>
@@ -146,7 +227,7 @@ fi
 # Set user avatar
 if test -n '<xsl:value-of select="config/avatar-location"/>'; then
 mkdir /mnt/unattended-media
-mount <xsl:value-of select='config/avatar-disk'/> /mnt/unattended-media
+mount <xsl:call-template name="avatar-disk"/> /mnt/unattended-media
 cp /mnt/unattended-media<xsl:value-of select="config/avatar-location"/> /home/<xsl:value-of select="config/user-login"/>/.face
 umount /mnt/unattended-media
 fi

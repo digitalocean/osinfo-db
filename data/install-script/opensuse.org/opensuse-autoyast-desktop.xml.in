@@ -7,6 +7,9 @@
     <profile>desktop</profile>
     <expected-filename>autoinst.xml</expected-filename>
     <config>
+      <!-- System options -->
+      <param name="target-disk" policy="optional"/>
+
       <!-- Localization options -->
       <param name="l10n-keyboard" policy="optional" value-map="http://x.org/x11-keyboard"/>
       <param name="l10n-language" policy="optional"/>
@@ -33,6 +36,31 @@
         version="1.0">
 
         <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
+
+        <xsl:template name="target-disk">
+          <xsl:choose>
+            <xsl:when test="config/target-disk != ''">
+              <xsl:value-of select="config/target-disk"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- virtio -->
+              <xsl:text>/dev/vda</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
+        <!-- The default values of avatar-disk consider the avatar is stored
+             in the same disk as the installation scripts. -->
+        <xsl:template name="avatar-disk">
+          <xsl:choose>
+            <xsl:when test="config/avatar-disk != ''">
+              <xsl:value-of select="config/avatar-disk"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>/dev/sda</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
 
         <xsl:template name="l10n-language">
           <xsl:choose>
@@ -67,8 +95,21 @@
           </xsl:choose>
         </xsl:template>
 
+        <xsl:template name="installation-url">
+          <xsl:choose>
+            <xsl:when test="config/installation-url != ''">
+              <xsl:value-of select="config/installation-url"/>
+            </xsl:when>
+            <xsl:when test="tree/url != ''">
+              <xsl:value-of select="tree/url"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="repo-oss"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
         <xsl:template name="repo-oss">
-          <xsl:text> </xsl:text>
           <xsl:text>http://download.opensuse.org/</xsl:text>
           <xsl:if test="not(contains(os/version, 'tumbleweed'))">
             <xsl:text>distribution/leap/</xsl:text>
@@ -115,6 +156,10 @@
             </xsl:otherwise>
           </xsl:choose>
           <xsl:value-of select="script/expected-filename"/>
+          <xsl:if test="script/installation-source = 'network'">
+            <xsl:text> install=</xsl:text>
+            <xsl:call-template name="installation-url"/>
+          </xsl:if>
         </xsl:template>
 
         <xsl:template match="/install-script-config">
@@ -123,12 +168,12 @@
               <device_map config:type="list">
                 <device_map_entry>
                   <firmware>hd0</firmware>
-                  <linux>/dev/vda</linux>
+                  <linux><xsl:call-template name="target-disk"/></linux>
                 </device_map_entry>
               </device_map>
               <global>
                 <activate>true</activate>
-                <append>resume=/dev/vda1 splash=silent quiet showopts</append>
+                <append>resume=<xsl:call-template name="target-disk"/>1 splash=silent quiet showopts</append>
                 <boot_boot>false</boot_boot>
                 <boot_extended>false</boot_extended>
                 <boot_mbr>false</boot_mbr>
@@ -193,7 +238,7 @@
           </networking>
           <partitioning config:type="list">
             <drive>
-              <device>/dev/vda</device>
+              <device><xsl:call-template name="target-disk"/></device>
               <type config:type="symbol">CT_DISK</type>
               <use>all</use>
             </drive>
@@ -237,7 +282,7 @@ fi
 if test -n '<xsl:value-of select="config/avatar-location"/>'; then
 # Set user avatar
 mkdir /mnt/unattended-media
-mount <xsl:value-of select='config/avatar-disk'/> /mnt/unattended-media
+mount <xsl:call-template name="avatar-disk"/> /mnt/unattended-media
 cp /mnt/unattended-media<xsl:value-of select="config/avatar-location"/> /var/lib/AccountsService/icons/<xsl:value-of select="config/user-login"/>
 umount /mnt/unattended-media
 
@@ -250,7 +295,7 @@ Icon=/var/lib/AccountsService/icons/<xsl:value-of select="config/user-login"/>
 fi
 
 # Enable default OpenSUSE repos
-zypper ar -f <xsl:call-template name="repo-oss"/> repo-oss
+zypper ar -f <xsl:call-template name="installation-url"/> repo-oss
 zypper ar -f <xsl:call-template name="repo-non-oss"/> repo-non-oss
 zypper ar -f <xsl:call-template name="repo-update-oss"/> repo-update-oss
 <xsl:if test="not(contains(os/version, 'tumbleweed'))">
