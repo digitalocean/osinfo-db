@@ -1,3 +1,10 @@
+osinfo-db (0.20190728-2digitalocean0) UNRELEASED; urgency=low
+
+  * No change rebuild for Trusty (which doesn't support binary packages
+    with xz members)
+
+ -- Andrew James <ajames@digitalocean.com>  Wed, 07 Aug 2019 16:24:54 -0600
+
 osinfo-db (0.20190728-2) unstable; urgency=medium
 
   * Upload to unstable
